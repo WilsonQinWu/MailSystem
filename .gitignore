@@ -58,7 +58,7 @@ coverage.xml
 # Django stuff:
 *.log
 local_settings.py
-db.sqlite3
+#db.sqlite3
 db.sqlite3-journal
 
 # Flask stuff:
@@ -134,7 +134,6 @@ mail_system_controller/frontend/*.pyc
 mail_system_controller/frontend/.grunt
 mail_system_controller/frontend/_SpecRunner.html
 mail_system_controller/frontend/__benchmarks__
-mail_system_controller/frontend/static/css/*
 mail_system_controller/frontend/static/frontend/*
 mail_system_controller/frontend/static/images/*
 mail_system_controller/frontend/remote-repo/
@@ -165,3 +164,4 @@ mail_system_controller/frontend/packages/react-devtools-extensions/.tempUserData
 mail_system_controller/frontend/packages/react-devtools-inline/dist
 mail_system_controller/frontend/packages/react-devtools-shell/dist
 mail_system_controller/frontend/packages/react-devtools-scheduling-profiler/dist
+*.old
