@@ -1,16 +1,19 @@
 import { put, takeLatest } from 'redux-saga/effects';
 import { persistReducer } from 'redux-persist';
+import { login } from "./authCrud";
 import storage from 'redux-persist/lib/storage';
 
 export const actionTypes = {
     Login: 'Login Act',
     Logout: 'Logout Act',
-    Register: 'Register Act'
+    Register: 'Register Act',
+    UserLoaded: 'UserLoaded'
 }
 
 export const actions = {
     login: (payload) => ({type: actionTypes.Login, payload}),
-    logout: () => ({type: actionTypes.Logout})
+    logout: () => ({type: actionTypes.Logout}),
+    fulfillUser: (user) => ({type: actionTypes.UserLoaded, payload})
 }
 
 const initAuthState = {
@@ -27,6 +30,9 @@ export const reducer = persistReducer(
             case actionTypes.Logout: {
                 return Object.assign({}, state, {user: undefined} )
             }
+            case actionTypes.UserLoaded: {
+                return Object.assign({}, state, {user: action.payload})
+            }
             default:
                 return state;
         }
@@ -34,7 +40,9 @@ export const reducer = persistReducer(
 )
 
 export function* saga() {
-    // yield takeLatest(actionTypes.Login, function* loginSaga({payload}) {
-    //     yield put(actions.Register);
-    // });
+    yield takeLatest(actionTypes.Login, function* loginSaga({payload}) {
+        const user = login(payload.uid, payload.password);
+
+        yield put(actions.fulfillUser(user));
+    });
 }
