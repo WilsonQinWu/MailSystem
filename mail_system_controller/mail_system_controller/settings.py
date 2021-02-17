@@ -76,14 +76,21 @@ WSGI_APPLICATION = 'mail_system_controller.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'amd_mailsystem',
+#         'USER': 'root',
+#         'PASSWORD': 'HxiB0vhVnWB2dAUsamX8cc',
+#         'HOST': '142.55.32.86',
+#         'PORT': '3306'
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'amd_mailsystem',
-        'USER': 'root',
-        'PASSWORD': 'HxiB0vhVnWB2dAUsamX8cc',
-        'HOST': 'localhost',
-        'PORT': '3306'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
