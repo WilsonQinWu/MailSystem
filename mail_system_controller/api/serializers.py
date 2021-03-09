@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Role, Profile
+from .models import Role, Profile, MailItem
 from django.contrib.auth.models import User
 
 
@@ -26,4 +26,12 @@ class ProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Profile
+        fields = '__all__'
+
+
+class MailItemSerializer(serializers.ModelSerializer):
+    creator = serializers.ReadOnlyField(source='owner.username')
+
+    class Meta:
+        model = MailItem
         fields = '__all__'
