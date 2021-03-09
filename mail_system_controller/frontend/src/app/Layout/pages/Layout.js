@@ -10,7 +10,7 @@ export const Layout = ({children}) => {
     if(!isHideDefault) {
         return <Grid container spacing={1}>
             <Grid item xs={12} align="center">
-                <Header />
+                {/* <Header /> */}
             </Grid>
 
             <Grid item xs={12} align="center">
@@ -18,7 +18,7 @@ export const Layout = ({children}) => {
             </Grid>
 
             <Grid item xs={12} align="center">
-                <Footer />
+                {/* <Footer /> */}
             </Grid>
         </Grid>
     } else {
