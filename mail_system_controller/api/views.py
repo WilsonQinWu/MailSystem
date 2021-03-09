@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from .serializers import RoleSerializer, CreateRoleSerializer, ProfileSerializer, UserSerializer
-from .models import Role, Profile
+from .serializers import RoleSerializer, CreateRoleSerializer, ProfileSerializer, UserSerializer, MailItemSerializer
+from .models import Role, Profile, MailItem
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import mixins, generics, status, permissions
@@ -71,3 +71,34 @@ class ProfileDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.D
 
     def delete(self, request, *args, **kwargs):
         return self.destroy(request, *args, **kwargs)
+
+
+class MailItemList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    queryset = MailItem.objects.all()
+    serializer_class = MailItemSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+
+class MailItemDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
+    queryset = MailItem.objects.all()
+    serializer_class = MailItemSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
+
