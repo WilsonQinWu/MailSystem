@@ -1,9 +1,11 @@
 from django.shortcuts import render
-from rest_framework import generics, status
-from .serializers import RoleSerializer, CreateRoleSerializer
-from .models import Role
+from .serializers import RoleSerializer, CreateRoleSerializer, ProfileSerializer, UserSerializer
+from .models import Role, Profile
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework import mixins, generics, status, permissions
+from django.contrib.auth.models import User
+from .permissions import IsOwnerOrReadOnly
 
 
 class RoleView(generics.ListAPIView):
@@ -14,7 +16,7 @@ class RoleView(generics.ListAPIView):
 class CreateRoleView(APIView):
     serializer_class = CreateRoleSerializer
 
-    def post(self, request, format=None):
+    def post(self, request):
         if not self.request.session.exists(self.request.session.session_key):
             self.request.session.create()
 
@@ -29,3 +31,43 @@ class CreateRoleView(APIView):
                             status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_404_NOT_FOUND)
+
+
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class ProfileList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+
+class ProfileDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
+    queryset = Profile.objects.all()
+    serializer_class = ProfileSerializer
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        return self.destroy(request, *args, **kwargs)
