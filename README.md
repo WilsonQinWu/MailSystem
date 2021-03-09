@@ -8,7 +8,7 @@ An internal mail management system built for [ArcelorMittal Dofasco](https://dof
 ## Setup and Run
 To run this project, have ```yarn/npm``` and ```pipenv``` installed locally:
 1. Install project dependencies. ```$ pipenv install``` ```$ yarn install```
-2. Run ```$ yarn start``` and ```$ python manage.py runsever```
+2. Run ```$ yarn/npm run dev``` and ```$ python manage.py runsever```
 3. Open your browser and point to localhost:8000 and you should see the application is working.
 ## Deploy with Docker 
 To run as a docker container, have [docker](https://docs.docker.com/engine/install/) installed locally:
