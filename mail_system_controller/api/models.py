@@ -22,9 +22,9 @@ class MailItem(models.Model):
     from_institution = models.CharField(max_length=64, null=False) # CRA or ...
     account_number = models.CharField(max_length=32)
     document_date = models.DateField(auto_now_add=True)
-    CLD = models.CharField(max_length=32)
-    suffix = models.CharField(max_length=32)
-    tax_year = models.DateField()
+    CLD = models.CharField(max_length=32, null=True, blank=True)
+    suffix = models.CharField(max_length=32, null=True, blank=True)
+    tax_year = models.DateField(blank=True, null=True)
     file_path = models.CharField(max_length=64, null=False)
     creator = models.ForeignKey('auth.User', on_delete=models.CASCADE)
     created_at = models.DateTimeField(default=now, editable=False)
