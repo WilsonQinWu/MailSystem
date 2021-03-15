@@ -10,6 +10,7 @@ import FormControl from "@material-ui/core/FormControl";
 export default function AuthLoginWidget() {
     const dispatch = useDispatch();
     const [username, setUsername] = React.useState("");
+    const [password, setPassword] = React.useState("");
 
     function handleUsername(event) {
         setUsername(event.target.value);
@@ -31,7 +32,23 @@ export default function AuthLoginWidget() {
                     <div align="center">User Name</div>
                 </FormHelperText>
             </FormControl>
+            <FormControl>
+                <TextField
+                    required={true}
+                    type="text"
+                    value={password}
+                    onChange={event => setPassword(event.target.value)}
+                    inputProps={{
+                        style: {textAlign: "center"}
+                    }}
+                />
+                <FormHelperText>
+                    <div align="center">Password</div>
+                </FormHelperText>
+            </FormControl>
         </Grid>
-        <Grid item align="center"><Button onClick={() => dispatch(allActions.login({uid: username}))}>Login</Button></Grid>
+        <Grid item align="center"><Button onClick={() => {
+            dispatch(allActions.login({username, password}));
+        }}>Login</Button></Grid>
     </Grid>
 }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const LOGIN_URL = "http://tech.sheridan.on.ca/capstone/robot/user/login";
+const LOGIN_URL = "http://127.0.0.1:8000/api/login/";
 
-export function login(id, password) {
-    return axios.post(LOGIN_URL, {id, password});
+export function login(username, password) {
+    return axios.post(LOGIN_URL, {username, password});
 }

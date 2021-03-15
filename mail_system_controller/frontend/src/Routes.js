@@ -11,27 +11,14 @@ export default function Routes() {
 
     return (
         <Switch>
-            {!isAuthorized ? (
-                <>
-                <Redirect to="/auth/login"/>
-                <Route>
-                    <AuthPage />
-                </Route>
-                </>
-            ) : (
-                <Redirect from="/auth" to="/"/>
-            ) }
-
-            <Route path="/error" component={ErrorPage} />
-            {/* <Route path="/logout" component={} /> */}
-
-            {!isAuthorized ? (
-                <BasePage />
-            ) : (
+            <Route path={"/auth/login"}>
+                <AuthPage />
+            </Route>
+            <Route>
                 <Layout>
                     <BasePage />
                 </Layout>
-            )}
+            </Route>
         </Switch>
     )
 }

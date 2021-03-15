@@ -42,7 +42,8 @@ export const reducer = persistReducer(
 export function* saga() {
     yield takeLatest(actionTypes.Login, function* loginSaga({payload}) {
         const user = login(payload.uid, payload.password);
-
-        yield put(actions.fulfillUser(user));
+        if (user) {
+            yield put(actions.fulfillUser(user));
+        }
     });
 }

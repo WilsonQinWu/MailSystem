@@ -85,7 +85,7 @@ class MailItemList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.Gene
         return self.create(request, *args, **kwargs)
 
     def perform_create(self, serializer):
-        serializer.save(owner=self.request.user)
+        serializer.save(creator=self.request.user)
 
 
 class MailItemDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, mixins.DestroyModelMixin, generics.GenericAPIView):
