@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a>
+{% endif %}
+{% endblock %}
+
+<h3>Register</h3>
+
+<form method="POST" action="">
+    {% csrf_token %}
+    {{form.username.label}}
+    {{form.username}}
+
+    {{form.email.label}}
+    {{form.email}}
+
+    {{form.password1.label}}
+    {{form.password1}}
+
+    {{form.password2.label}}
+    {{form.password2}}
+
+    <input type="submit" name="Create User">
+</form>
